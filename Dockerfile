@@ -1,4 +1,4 @@
-FROM node:21-alpine
+FROM node:18-alpine
 
 # Create app directory
 
@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install yarn and check the yarn version
 
-RUN npm install -g yarn
+# RUN npm install -g yarn
 
 RUN yarn --version
 
