@@ -16,7 +16,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v3
@@ -29,11 +28,8 @@ jobs:
         run: npm install --global yarn
       - name: check yarn version
         run: yarn --version
-        # install dependencies, cache them and build the application
-
       - name: install dependencies
         run: yarn
-
       - name: build application
         run: yarn build
       - name: show build files
@@ -45,3 +41,4 @@ jobs:
     steps:
       - name: show build files
         run: ls -la
+
