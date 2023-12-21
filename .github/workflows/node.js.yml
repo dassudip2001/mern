@@ -39,6 +39,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: show build files
-        run: ls -la
+      - name: Show build files
+        run: |
+          ls -la
+          echo "Current directory: $(pwd)"
+          echo "Contents of the current directory: $(ls -la)"
+          echo "Contents of the build directory: $(ls -la /path/to/your/build/directory)"
+
 
