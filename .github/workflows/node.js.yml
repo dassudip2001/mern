@@ -33,7 +33,10 @@ jobs:
       - name: build application
         run: yarn build
       - name: show build files
-        run: ls -la
+        run: |
+          ls -la
+          cd dist
+          ls -la
 
   check-build:
     runs-on: ubuntu-latest
