@@ -24,3 +24,9 @@ RUN yarn
 COPY . .
 
 RUN yarn build
+
+
+#  deploy nginx
+
+FROM nginx
+COPY ./dist/ci-cd/browser /usr/share/nginx/html
