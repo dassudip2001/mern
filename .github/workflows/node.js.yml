@@ -37,10 +37,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: angular-app
-          run: |
-            ls -la
-            cd dist
-            ls -la
+          path: dist/ci-cd/browser
 
   deploy:
     runs-on: self-hosted
