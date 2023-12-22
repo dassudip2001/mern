@@ -31,14 +31,13 @@ jobs:
       - name: show build files
         run: |
           ls -la
-          mkdir ./webapp
-          cp -r . ./webapp
+          cd dist/ci-cd/browser
           ls -la
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: angular-app
-          path: ./webapp
+          path: dist/ci-cd/browser
 
   deploy:
     runs-on: self-hosted
@@ -50,10 +49,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: angular-app
-          path: ./webapp
+          path: /home/ubuntu/webapp
 
       - name: Verify Artifacts
-        run: ls -l /home/ubuntu/actions-runner
+        run: ls -l path/on/webapp
 
       - name: Your Deployment Steps
         run: |
