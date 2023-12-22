@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
@@ -40,8 +37,26 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: angular-app
-          path: /home/
-      - name: check dir
+          run: |
+            ls -la
+            cd dist
+            ls -la
+
+  deploy:
+    runs-on: self-hosted
+
+    needs: build
+
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: angular-app
+          path: path/on/self-hosted/runner
+
+      - name: Verify Artifacts
+        run: ls -l path/on/self-hosted/runner
+
+      - name: Your Deployment Steps
         run: |
-          cd /home/
-          ls -la
+          # Add your deployment commands here
