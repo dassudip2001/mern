@@ -40,8 +40,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: angular-app
-          path: /home/ubuntu/actions-runner
+          path: /home/
       - name: check dir
         run: |
-          cd /home/ubuntu/actions-runner
+          cd /home/
           ls -la
