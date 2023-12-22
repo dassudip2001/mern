@@ -31,7 +31,7 @@ jobs:
       - name: show build files
         run: |
           ls -la
-          cd dist
+          cd dist/ci-cd/browser
           ls -la
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
