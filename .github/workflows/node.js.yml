@@ -37,6 +37,8 @@ jobs:
         run: |
           mkdir deploy
           cp -r dist/ci-cd/browser/* deploy
+          cp -r Dockerfile deploy
+          cp -r docker-compose.yml deploy
           ls -la deploy
           cd deploy
           ls -la
