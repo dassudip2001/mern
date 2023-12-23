@@ -28,37 +28,32 @@ jobs:
         run: yarn
       - name: build application
         run: yarn build
-      - name: show build files
-        run: |
-          ls -la
-          cd dist/ci-cd/browser
-          ls -la
-      - name: Copy files to artifact directory
-        run: |
-          mkdir -p $GITHUB_WORKSPACE/artifact
-          cp -r dist/ci-cd/browser/* $GITHUB_WORKSPACE/artifact
-          cp -r Dockerfile $GITHUB_WORKSPACE/artifact
-          cp -r docker-compose.yml $GITHUB_WORKSPACE/artifact
-          ls -la $GITHUB_WORKSPACE/artifact
+      # - name: show build files
+      #   run: |
+      #     ls -la
+      #     cd dist/ci-cd/browser
+      #     ls -la
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/ci-cd/browser
 
   deploy:
-    runs-on: self-hosted # Change this to your self-hosted runner's OS
-
+    runs-on: self-hosted
     needs: build
-
     steps:
-      - name: Download Artifacts
+      - name: download artifact
         uses: actions/download-artifact@v2
         with:
-          name: deploy-artifacts
-          path: $GITHUB_WORKSPACE/artifact
-
-      - name: Verify deployment on self-hosted runner
-        run: ls -la $GITHUB_WORKSPACE/artifact
-
-      - name: Your Deployment Steps
-        run: |
-          # Add your deployment commands here
-          # For example, deploy to a server, update configurations, etc.
-          cd $GITHUB_WORKSPACE/artifact
-          ls -la
+          name: dist
+          path: dist
+      # - name: Copy all files to another folder for deploy
+      #   run: |
+      #     mkdir $GITHUB_WORKSPACE/deploy
+      #     cp -r dist/ci-cd/browser/* $GITHUB_WORKSPACE/deploy
+      #     cp -r Dockerfile $GITHUB_WORKSPACE/deploy
+      #     cp -r docker-compose.yml $GITHUB_WORKSPACE/deploy
+      #     ls -la $GITHUB_WORKSPACE/deploy
+      #     cd $GITHUB_WORKSPACE/deploy
+      #     ls -la
