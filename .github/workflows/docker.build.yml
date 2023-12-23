@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker build
 
 on:
   push:
@@ -15,6 +15,6 @@ jobs:
       - name: Build the Docker image
         run: docker build -t app .
       - name: Test the Docker image
-        run: docker run -p 80:80-d app
+        run: docker run -p 80:80 -d app
       - name: check
         run: docker ps
