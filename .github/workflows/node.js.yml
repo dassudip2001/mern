@@ -28,11 +28,26 @@ jobs:
         run: yarn
       - name: build application
         run: yarn build
-      - name: show build files
-        run: |
-          ls -la
-          cd dist/ci-cd/browser
-          ls -la
+      # - name: show build files
+      #   run: |
+      #     ls -la
+      #     cd dist/ci-cd/browser
+      #     ls -la
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/ci-cd/browser
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
       # - name: Copy all files to another folder for deploy
       #   run: |
       #     mkdir $GITHUB_WORKSPACE/deploy
@@ -42,11 +57,3 @@ jobs:
       #     ls -la $GITHUB_WORKSPACE/deploy
       #     cd $GITHUB_WORKSPACE/deploy
       #     ls -la
-  deploy:
-    runs-on: self-hosted # Change this to your self-hosted runner's OS
-
-    needs: build
-
-    steps:
-      - name: Verify deployment on self-hosted runner
-        run: ls -la
