@@ -33,15 +33,15 @@ jobs:
           ls -la
           cd dist/ci-cd/browser
           ls -la
-      - name: Copy all files to another folder for deploy
-        run: |
-          mkdir $GITHUB_WORKSPACE/deploy
-          cp -r dist/ci-cd/browser/* $GITHUB_WORKSPACE/deploy
-          cp -r Dockerfile $GITHUB_WORKSPACE/deploy
-          cp -r docker-compose.yml $GITHUB_WORKSPACE/deploy
-          ls -la $GITHUB_WORKSPACE/deploy
-          cd $GITHUB_WORKSPACE/deploy
-          ls -la
+      # - name: Copy all files to another folder for deploy
+      #   run: |
+      #     mkdir $GITHUB_WORKSPACE/deploy
+      #     cp -r dist/ci-cd/browser/* $GITHUB_WORKSPACE/deploy
+      #     cp -r Dockerfile $GITHUB_WORKSPACE/deploy
+      #     cp -r docker-compose.yml $GITHUB_WORKSPACE/deploy
+      #     ls -la $GITHUB_WORKSPACE/deploy
+      #     cd $GITHUB_WORKSPACE/deploy
+      #     ls -la
   deploy:
     runs-on: self-hosted # Change this to your self-hosted runner's OS
 
@@ -49,11 +49,4 @@ jobs:
 
     steps:
       - name: Verify deployment on self-hosted runner
-        run: ls -la $GITHUB_WORKSPACE/deploy
-
-      - name: Your Deployment Steps
-        run: |
-          # Add your deployment commands here
-          # For example, deploy to a server, update configurations, etc.
-          cd $GITHUB_WORKSPACE/deploy
-          ls -la
+        run: ls -la
