@@ -26,7 +26,17 @@ COPY . .
 RUN yarn build
 
 
-#  deploy nginx
+#  if build success the angular app then deploy the app in the nginx container
 
-FROM nginx
-COPY ./dist/ci-cd/browser /usr/share/nginx/html
+
+
+FROM nginx:1.21.3-alpine
+
+COPY --from=0 /app/dist/ci-cd/browser /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+
+

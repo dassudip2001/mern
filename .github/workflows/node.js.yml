@@ -49,10 +49,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: angular-app
-          path: /home/ubuntu/webapp
+          path: path/on/self-hosted/runner
 
       - name: Verify Artifacts
-        run: ls -l path/on/webapp
+        run: ls -l path/on/self-hosted/runner
 
       - name: Your Deployment Steps
         run: |
