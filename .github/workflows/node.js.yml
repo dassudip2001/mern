@@ -33,27 +33,10 @@ jobs:
           ls -la
           cd dist/ci-cd/browser
           ls -la
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: angular-app
-          path: dist/ci-cd/browser
-
-  deploy:
-    runs-on: self-hosted
-
-    needs: build
-
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: angular-app
-          path: path/on/self-hosted/runner
-
-      - name: Verify Artifacts
-        run: ls -l path/on/self-hosted/runner
-
-      - name: Your Deployment Steps
+      - name: Copy all file to anouther folder for deploy
         run: |
-          # Add your deployment commands here
+          mkdir deploy
+          cp -r dist/ci-cd/browser/* deploy
+          ls -la deploy
+          cd deploy
+          ls -la
