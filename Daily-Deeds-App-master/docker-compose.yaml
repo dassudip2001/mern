@@ -4,7 +4,7 @@ version: "3.3"
 services:
 
   server:
-    image: navidhejazi/dailydeeds_server:latest
+    image: dassudip2001/dailydeeds_server:latest
     ports:
       - "8000:8000"
     depends_on:
@@ -25,7 +25,7 @@ services:
       - my-network
 
   client:
-    image: navidhejazi/dailydeeds_client:latest 
+    image: dassudip2001/dailydeeds_client:latest 
     ports:
       - "3000:3000"
     environment:
@@ -179,14 +179,14 @@ networks:
 # version: "3"
 # services:
 #   server:
-#     image: navidhejazi/dailydeeds_server:latest
+#     image: dassudip2001/dailydeeds_server:latest
 #     environment:
 #       - POSTGRES_URL="postgres://default:2WQUmkHiT8PA@ep-billowing-smoke-08031426-pooler.eu-central-1.postgres.vercel-storage.com:5432/verceldb"
 #     ports:
 #       - "8000:8000"
  
 #   react-app:
-#     image: navidhejazi/dailydeeds_client:latest
+#     image: dassudip2001/dailydeeds_client:latest
 #     ports:
 #       - "3000:3000"
 #     environment:
