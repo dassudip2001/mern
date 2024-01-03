@@ -1,0 +1,59 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: yarn install
+        run: npm install --global yarn
+      - name: check yarn version
+        run: yarn --version
+      - name: install dependencies
+        run: yarn
+      - name: build application
+        run: yarn build
+      # - name: show build files
+      #   run: |
+      #     ls -la
+      #     cd dist/ci-cd/browser
+      #     ls -la
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/ci-cd/browser
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      # - name: Copy all files to another folder for deploy
+      #   run: |
+      #     mkdir $GITHUB_WORKSPACE/deploy
+      #     cp -r dist/ci-cd/browser/* $GITHUB_WORKSPACE/deploy
+      #     cp -r Dockerfile $GITHUB_WORKSPACE/deploy
+      #     cp -r docker-compose.yml $GITHUB_WORKSPACE/deploy
+      #     ls -la $GITHUB_WORKSPACE/deploy
+      #     cd $GITHUB_WORKSPACE/deploy
+      #     ls -la

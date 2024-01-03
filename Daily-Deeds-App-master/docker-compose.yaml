@@ -1,0 +1,198 @@
+
+version: "3.3"
+
+services:
+
+  server:
+    image: navidhejazi/dailydeeds_server:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - my-network
+
+  db:
+    image: "postgres"
+    environment:
+      POSTGRES_USER: "docker"
+      POSTGRES_PASSWORD: "12345"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+  client:
+    image: navidhejazi/dailydeeds_client:latest 
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_SERVERURL=http://server:8000 
+    depends_on:
+      - server
+    networks:
+      - my-network
+
+volumes:
+  pg_data:
+  
+networks:
+  my-network:
+
+
+# locally
+# version: "3.3"
+
+# services:
+
+#   server:
+#     build: ./server
+#     image: serverdeeds:latest
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - db
+#     networks:
+#       - my-network
+
+  
+#   db:
+#     image: "postgres"
+#     environment:
+#       POSTGRES_USER: "docker"
+#       POSTGRES_PASSWORD: "12345"
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pg_data:/var/lib/postgresql/data
+#     networks:
+#       - my-network
+  
+#   client:
+#     build: ./client  
+#     image: reactdeeds:latest
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - REACT_APP_SERVERURL=http://server:8000
+#     depends_on:
+#       - server
+#     networks:
+#       - my-network
+
+# volumes:
+#   pg_data:
+  
+# networks:
+#   my-network:
+
+
+
+# ------------------------
+# version: "3.3"
+
+# services:
+#   server:
+#     build: ./server
+#     image: serverdeeds:latest
+#     volumes:
+#       - ./node:/app
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - db
+#     networks:
+#       - my-network
+
+
+#   client:
+#     build: ./client
+#     image: clientdeeds:latest
+#     environment:
+#       - REACT_APP_SERVERURL=http://server:8000
+#     volumes:
+#       - ./react:/app
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - server
+#     networks:
+#       - my-network
+  
+#   db:
+#     image: postgres:latest
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: my_database
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - ./db:/var/lib/postgresql/data
+  
+
+# networks:
+#   my-network:
+# volumes:
+#   db:
+  
+
+
+
+
+
+#  ----------------------------------
+# version: "3.3"
+
+# services:
+#   client:
+#     build: ./client
+#     image: clientdeeds:latest
+#     environment:
+#       - REACT_APP_SERVERURL=http://server:8000
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - server
+#     networks:
+#       - my-network
+
+#   server:
+#     build: ./server
+#     image: serverdeeds:latest
+#     environment:
+#       - POSTGRES_URL="postgres://default:2WQUmkHiT8PA@ep-billowing-smoke-08031426-pooler.eu-central-1.postgres.vercel-storage.com:5432/verceldb"
+#     ports:
+#       - "8000:8000"
+#     networks:
+#       - my-network
+
+# networks:
+#   my-network:
+#     external: true
+
+
+
+
+# version: "3"
+# services:
+#   server:
+#     image: navidhejazi/dailydeeds_server:latest
+#     environment:
+#       - POSTGRES_URL="postgres://default:2WQUmkHiT8PA@ep-billowing-smoke-08031426-pooler.eu-central-1.postgres.vercel-storage.com:5432/verceldb"
+#     ports:
+#       - "8000:8000"
+ 
+#   react-app:
+#     image: navidhejazi/dailydeeds_client:latest
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - REACT_APP_SERVERURL=http://server:8000
+#     depends_on:
+#       - server
+
+
+   
