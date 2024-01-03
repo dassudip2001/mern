@@ -16,7 +16,7 @@ DailyDeeds is deployed using a combination of services:<br />
 ***Frontend:*** Hosted on Render.com for reliable and scalable hosting.<br />
 ***Backend:*** Also hosted on Render.com for high availability and performance.<br />
 ***Database:*** PostgreSQL is hosted on Vercel.com, offering a secure and scalable database hosting solution.<br />
-[App_Link](https://todoapp-client-kcd5.onrender.com/)<br />
+
 
 # Deployment 2: 
 ***GitHub Actions Workflow, Docker and AWS Deployment***<br />
@@ -29,8 +29,6 @@ Job 2 - Deploy to AWS EC2:<br />
 &nbsp;&nbsp;&nbsp; Step 1: Copy the provided Docker Compose file to your AWS EC2 instance.<br />
 &nbsp;&nbsp;&nbsp; Step 2: Run the app on AWS using Docker Compose. The Docker Compose file orchestrates the frontend, backend, database containers.
 
-# Demo:
-https://github.com/seyyednavid/Daily-Deeds-App/assets/100324062/ea686ae9-bf76-4ca6-8d86-01a7430f7191
 
 
 
