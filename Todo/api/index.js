@@ -1,73 +1,68 @@
 const express = require("express");
-const cors = require("cors");
-const { todo } = require("./db");
-const { createTodo, updateTodo } = require("./todoModel");
 
 const app = express();
-
-const port = 3001;
-
+const port = 3000;
+const mongoose = require("mongoose");
+const Todo = require("./db");
+const { createTodo } = require("./todoModel");
 app.use(express.json());
-app.use(cors);
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({
-    msg: "Hello World",
-  });
+  res.send("Hello World!");
 });
-// create todo using async await
-app.post("/todo", async (req, res) => {
-  const createPayload = req.body;
-  const parsedPayload = createTodo.safeParse(createPayload);
 
-  if (!parsedPayload.success) {
-    res.status(411).json({
-      msg: "You sent the wrong inputs",
-    });
-    return;
+app.post("/todos", async (req, res) => {
+  try {
+    const todo = await Todo.create(createTodo.parse(req.body));
+    res.status(201).json(todo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-  // put it in mongodb
-  await todo.create({
-    name: createPayload.name,
-    description: createPayload.description,
-    isCompleat: false,
-  });
-
-  res.json({
-    msg: "Todo created",
-  });
 });
 
-// get all todo
-app.get("/todo", async (req, res) => {
-  // implement
-  const todo = await todo.getAll();
-  return res.json(todo);
-});
-
-// complete todo
-app.put("/todo", async (req, res) => {
-  //implement
-  const updatePayload = req.body;
-  const parsedPayload = updateTodo.safeParse(updatePayload);
-  if (!parsedPayload.success) {
-    res.status(411).json({
-      msg: "You sent the wrong inputs",
-    });
-    return;
+// Get all todos
+app.get("/todos", async (req, res) => {
+  try {
+    const todos = await Todo.find();
+    res.status(200).json(todos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
+});
 
-  await todo.update(
-    {
-      _id: req.body.id,
-    },
-    {
-      isCompleat: true,
+// Update a todo by ID
+app.put("/todos/:id", async (req, res) => {
+  try {
+    const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updatedTodo) {
+      return res.status(404).json({ error: "Todo not found" });
     }
-  );
-
-  res.json({
-    msg: "Todo marked as completed",
-  });
+    res.status(200).json(updatedTodo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
-app.listen(3001);
+
+// Delete a todo by ID
+app.delete("/todos/:id", async (req, res) => {
+  try {
+    const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+    if (!deletedTodo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+    res.status(204).send(); // No content on successful deletion
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
