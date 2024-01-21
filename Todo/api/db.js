@@ -10,9 +10,19 @@ if (!connect) {
 }
 
 const todo = new mongoose.Schema({
-  name: String,
-  description: String,
-  isCompleat: Boolean,
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  description: {
+    type: String,
+    require: true,
+  },
+  isCompleat: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Todo = mongoose.model("Todo", todo);

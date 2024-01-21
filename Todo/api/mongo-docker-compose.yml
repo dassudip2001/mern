@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mongonode:
+    image: mongo
+    restart: always
+    volumes:
+      - museum:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - node
+
+networks:
+  node:
+
+volumes:
+  museum:

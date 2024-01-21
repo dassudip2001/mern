@@ -1,0 +1,45 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+image: maven:3.3.9-jdk-8
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+cache:
+  paths:
+    - .m2/repository
+    - target/
+
+Build Job:
+  stage: build
+  tags:
+    - docker
+  script:
+    - echo "Maven build"
+    - "mvn compile"
+
+Test Job:
+  stage: test
+  tags:
+    - docker
+  script:
+    - echo "Testing the app"
+    - "mvn test"
+
+Package Job:
+  stage: package
+  tags:
+    - docker
+  script:
+    - echo "Packaging the app"
+    - "mvn package"
+
+Deploy Job:
+  stage: deploy
+  tags:
+    - docker
+  script:
+    - echo "Deploying the app"
